@@ -6,7 +6,7 @@
 /*   By: tkurukul <thilinaetoro4575@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/04 17:06:50 by tkurukul          #+#    #+#             */
-/*   Updated: 2025/06/04 19:25:06 by tkurukul         ###   ########.fr       */
+/*   Updated: 2025/06/04 23:13:07 by tkurukul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,16 +51,13 @@ void	init_parssing(char **av, t_info *info)
 	info->time_die = ft_atol(av[2]) * 1000;
 	info->time_eat = ft_atol(av[3]) * 1000;
 	info->time_sleep = ft_atol(av[4]) * 1000;
-	if (info->time_die < (MIN_TIME *1000) || info->time_eat < (MIN_TIME *1000)
-			|| info->time_sleep < (MIN_TIME *1000))
+	if (info->time_die < (MIN_TIME * 1000) || info->time_eat < (MIN_TIME * 1000)
+			|| info->time_sleep < (MIN_TIME * 1000))
 		return (err_parsing(NULL, 2), exit(1));
 	if (av[5])
 		info->limit_eat = ft_atol(av[5]);
 	if (info->limit_eat == 0 || info->num_philo == 0 || info->time_die == 0
 			|| info->time_eat == 0 || info->time_sleep == 0)
 		return (err_parsing(NULL, 1), exit(1));
-	info->tids = malloc(info->num_philo * sizeof(pthread_t));
-	if (!info->tids)
-		return (err_parsing(NULL, 3), exit(1));
-	memset(info->tids, 0, info->num_philo * sizeof(pthread_t));
+
 }
