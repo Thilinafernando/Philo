@@ -6,7 +6,7 @@
 /*   By: tkurukul <thilinaetoro4575@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 00:05:18 by tkurukul          #+#    #+#             */
-/*   Updated: 2025/06/05 00:05:51 by tkurukul         ###   ########.fr       */
+/*   Updated: 2025/06/05 20:37:13 by tkurukul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	free_forks(t_info *info)
 	i = -1;
 	if (info->forks)
 	{
-		while (i < info->num_philo)
+		while (++i < info->num_philo)
 		{
 			if (pthread_mutex_destroy(&info->forks[i]) != 0)
 				return (err_parsing("Mutex destroy failed", -42));
@@ -31,9 +31,16 @@ void	free_forks(t_info *info)
 
 void	free_all(t_info *info)
 {
+	int	i;
+
+	i = -1;
 	free_forks(info);
 	if (pthread_mutex_destroy(&info->print_mutex) != 0)
 		err_parsing("Mutex destroy failed", -42);
+	if (pthread_mutex_destroy(&info->death_mutex) != 0)
+		err_parsing("Mutex destroy failed", -42);
+	if (info->reaper)
+		pthread_join(info->reaper, NULL);
 	if (info->tids)
 	{
 		free(info->tids);
@@ -41,6 +48,11 @@ void	free_all(t_info *info)
 	}
 	if (info->philo)
 	{
+		while ( ++i < info->num_philo)
+		{
+			if (pthread_mutex_destroy(&info->philo[i].meal_mutex) != 0)
+				err_parsing("Mutex destroy failed", -42);
+		}
 		free(info->philo);
 		info->philo = NULL;
 	}

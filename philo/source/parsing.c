@@ -6,7 +6,7 @@
 /*   By: tkurukul <thilinaetoro4575@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/04 17:06:50 by tkurukul          #+#    #+#             */
-/*   Updated: 2025/06/04 23:13:07 by tkurukul         ###   ########.fr       */
+/*   Updated: 2025/06/05 21:28:50 by tkurukul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,19 +45,18 @@ void	init_parssing(char **av, t_info *info)
 	int	i;
 
 	i = 0;
-	if (!av[1] || !av[2] || !av[3] || !av[4] || av[6])
+	if (!av[1] || !av[2] || !av[3] || !av[4])
 		return ( write(2, "Philo: Incorrect number of args\n", 32), exit(1));
 	info->num_philo = ft_atol(av[1]);
-	info->time_die = ft_atol(av[2]) * 1000;
-	info->time_eat = ft_atol(av[3]) * 1000;
-	info->time_sleep = ft_atol(av[4]) * 1000;
-	if (info->time_die < (MIN_TIME * 1000) || info->time_eat < (MIN_TIME * 1000)
-			|| info->time_sleep < (MIN_TIME * 1000))
+	info->time_die = ft_atol(av[2]);
+	info->time_eat = ft_atol(av[3]);
+	info->time_sleep = ft_atol(av[4]);
+	if (info->time_die < MIN_TIME || info->time_eat < MIN_TIME
+			|| info->time_sleep < MIN_TIME)
 		return (err_parsing(NULL, 2), exit(1));
 	if (av[5])
 		info->limit_eat = ft_atol(av[5]);
 	if (info->limit_eat == 0 || info->num_philo == 0 || info->time_die == 0
 			|| info->time_eat == 0 || info->time_sleep == 0)
 		return (err_parsing(NULL, 1), exit(1));
-
 }

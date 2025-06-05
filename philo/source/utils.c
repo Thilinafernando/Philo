@@ -6,7 +6,7 @@
 /*   By: tkurukul <thilinaetoro4575@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/04 17:46:18 by tkurukul          #+#    #+#             */
-/*   Updated: 2025/06/05 00:13:24 by tkurukul         ###   ########.fr       */
+/*   Updated: 2025/06/05 21:41:46 by tkurukul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,4 +48,24 @@ long long	get_time_in_ms(void)
 	struct timeval	tv;
 	gettimeofday(&tv, NULL);
 	return ((tv.tv_sec * 1000LL) + (tv.tv_usec / 1000));
+}
+
+int	check_if_done(t_philo *philo)
+{
+	int done;
+
+	pthread_mutex_lock(&philo->meal_mutex);
+	done = (philo->info->limit_eat != -1 && philo->num_eaten >= philo->info->limit_eat);
+	pthread_mutex_unlock(&philo->meal_mutex);
+	return (done);
+}
+
+int	check_death_flag(t_philo *philo)
+{
+	int flag;
+
+	pthread_mutex_lock(&philo->info->death_mutex);
+	flag = philo->info->deathflag;
+	pthread_mutex_unlock(&philo->info->death_mutex);
+	return (flag);
 }

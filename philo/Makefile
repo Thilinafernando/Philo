@@ -6,7 +6,8 @@ INCLUDES = -I/usr/include
 NAME = philo
 
 SRCDIR = source/
-SRC = source/main.c parsing.c utils.c
+SRC = source/main.c parsing.c utils.c death_thread.c free.c init.c \
+		routine.c routine_utils.c 
 
 ALL_SRC = $(SRC)
 
