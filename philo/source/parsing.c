@@ -6,7 +6,7 @@
 /*   By: tkurukul <thilinaetoro4575@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/04 17:06:50 by tkurukul          #+#    #+#             */
-/*   Updated: 2025/06/05 21:28:50 by tkurukul         ###   ########.fr       */
+/*   Updated: 2025/06/06 22:59:35 by tkurukul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 long	ft_atol(const char *str)
 {
-	int		i;
+	int			i;
 	long long	result;
 
 	i = 0;
@@ -36,27 +36,24 @@ long	ft_atol(const char *str)
 		i++;
 	}
 	if (result < 0 || result > LONG_MAX)
-		return(err_parsing(str, 0), exit(1), -1);
+		return (err_parsing(str, 0), exit(1), -1);
 	return ((long)result);
 }
 
-void	init_parssing(char **av, t_info *info)
+void	init_parssing(int ac, char **av, t_info *info)
 {
 	int	i;
 
 	i = 0;
-	if (!av[1] || !av[2] || !av[3] || !av[4])
-		return ( write(2, "Philo: Incorrect number of args\n", 32), exit(1));
+	if (!av[1] || !av[2] || !av[3] || !av[4] || ac >= 7)
+		return (write(2, "Philo: Incorrect number of args\n", 32), exit(1));
 	info->num_philo = ft_atol(av[1]);
 	info->time_die = ft_atol(av[2]);
 	info->time_eat = ft_atol(av[3]);
 	info->time_sleep = ft_atol(av[4]);
-	if (info->time_die < MIN_TIME || info->time_eat < MIN_TIME
-			|| info->time_sleep < MIN_TIME)
-		return (err_parsing(NULL, 2), exit(1));
 	if (av[5])
 		info->limit_eat = ft_atol(av[5]);
 	if (info->limit_eat == 0 || info->num_philo == 0 || info->time_die == 0
-			|| info->time_eat == 0 || info->time_sleep == 0)
+		|| info->time_eat == 0 || info->time_sleep == 0)
 		return (err_parsing(NULL, 1), exit(1));
 }

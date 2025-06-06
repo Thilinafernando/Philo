@@ -6,7 +6,7 @@
 /*   By: tkurukul <thilinaetoro4575@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 00:05:18 by tkurukul          #+#    #+#             */
-/*   Updated: 2025/06/05 20:37:13 by tkurukul         ###   ########.fr       */
+/*   Updated: 2025/06/06 22:22:09 by tkurukul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,6 @@ void	free_all(t_info *info)
 		err_parsing("Mutex destroy failed", -42);
 	if (pthread_mutex_destroy(&info->death_mutex) != 0)
 		err_parsing("Mutex destroy failed", -42);
-	if (info->reaper)
-		pthread_join(info->reaper, NULL);
 	if (info->tids)
 	{
 		free(info->tids);
@@ -48,7 +46,7 @@ void	free_all(t_info *info)
 	}
 	if (info->philo)
 	{
-		while ( ++i < info->num_philo)
+		while (++i < info->num_philo)
 		{
 			if (pthread_mutex_destroy(&info->philo[i].meal_mutex) != 0)
 				err_parsing("Mutex destroy failed", -42);
@@ -57,4 +55,3 @@ void	free_all(t_info *info)
 		info->philo = NULL;
 	}
 }
-
